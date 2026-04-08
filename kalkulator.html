@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROI-kalkulator | Bonesai – Ordreautomatisering</title>
+  <meta name="description" content="Se hvor mye tid og penger du kan spare med AI-drevet ordreimport. Beregn din ROI på under 30 sekunder." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#0A1128',
+            cyanGlow: '#00FFFF',
+            cobalt: '#1E3A8A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+          },
+          letterSpacing: { extra: '0.18em' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      background-color: #0A1128;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .garden-bg {
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(0,255,255,0.08), transparent 55%),
+        radial-gradient(ellipse at 85% 30%, rgba(30,58,138,0.55), transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(0,255,255,0.05), transparent 60%),
+        #0A1128;
+    }
+    .nav-white {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(10,17,40,0.08);
+      box-shadow: 0 6px 30px -12px rgba(0,0,0,0.35);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.35), 0 0 24px rgba(0,255,255,0.25);
+    }
+    .glow-cyan:hover {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.6), 0 0 36px rgba(0,255,255,0.45);
+    }
+    .hairline {
+      background: linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent);
+      height: 1px;
+    }
+    .heading-tracking { letter-spacing: 0.18em; }
+
+    /* Calculator card */
+    .calc-card {
+      border: 1px solid rgba(0,255,255,0.15);
+      background: linear-gradient(160deg, rgba(30,58,138,0.22), rgba(10,17,40,0.55));
+      backdrop-filter: blur(12px);
+    }
+    .result-card {
+      border: 1px solid rgba(0,255,255,0.12);
+      background: linear-gradient(180deg, rgba(30,58,138,0.18), rgba(10,17,40,0.35));
+      transition: all 0.4s ease;
+    }
+    .result-card.highlight {
+      border-color: rgba(0,255,255,0.45);
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.2), 0 20px 50px -20px rgba(0,255,255,0.3);
+    }
+
+    /* Input styling */
+    .calc-input {
+      background: rgba(10,17,40,0.6);
+      border: 1px solid rgba(0,255,255,0.15);
+      color: #ffffff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+    }
+    .calc-input:focus {
+      border-color: rgba(0,255,255,0.55);
+      box-shadow: 0 0 0 3px rgba(0,255,255,0.08);
+    }
+    .calc-input::-webkit-inner-spin-button,
+    .calc-input::-webkit-outer-spin-button { opacity: 0.4; }
+
+    /* Range slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(0,255,255,0.15);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #00FFFF;
+      box-shadow: 0 0 10px rgba(0,255,255,0.6);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    /* Score ring */
+    .score-ring { transform: rotate(-90deg); }
+    .score-track { fill: none; stroke: rgba(0,255,255,0.08); stroke-width: 8; }
+    .score-fill {
+      fill: none;
+      stroke: #00FFFF;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1);
+      filter: drop-shadow(0 0 6px rgba(0,255,255,0.7));
+    }
+
+    /* Bar chart */
+    .bar-track {
+      background: rgba(0,255,255,0.06);
+      border: 1px solid rgba(0,255,255,0.10);
+      border-radius: 4px;
+      overflow: hidden;
+      height: 10px;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .bar-before { background: rgba(255,80,80,0.55); }
+    .bar-after  { background: linear-gradient(90deg, #00FFFF, #1E3A8A); box-shadow: 0 0 8px rgba(0,255,255,0.4); }
+
+    /* Number animation */
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      transition: opacity 0.2s;
+    }
+
+    /* Circuit accent */
+    .circuit-line::before {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, #00FFFF, transparent);
+      margin-bottom: 1rem;
+    }
+
+    /* Pulse badge */
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(0,255,255,0.4); }
+      70%  { box-shadow: 0 0 0 10px rgba(0,255,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,255,255,0); }
+    }
+    .live-badge {
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    /* Fade-in */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease forwards; }
+
+    /* Gradient text */
+    .grad-text {
+      background: linear-gradient(135deg, #00FFFF, #a5f3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="garden-bg">
+
+  <!-- ===== NAV ===== -->
+  <header class="fixed top-0 inset-x-0 z-50 nav-white">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="logo.png" alt="Bonesai logo" class="h-12 w-12 object-contain" />
+        <span class="font-display text-xl font-semibold tracking-wide text-cobalt">Bonesai</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-10 text-sm font-medium text-midnight/80">
+        <li><a href="/tjenester" class="hover:text-cobalt transition-colors">Tjenester</a></li>
+        <li><a href="/demo" class="hover:text-cobalt transition-colors">Demo</a></li>
+        <li><a href="/om" class="hover:text-cobalt transition-colors">Om</a></li>
+      </ul>
+      <a href="/#kontakt"
+         class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white bg-cobalt hover:bg-midnight transition-all duration-300">
+        Kontakt
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="pt-40 pb-12 lg:pt-52 lg:pb-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center">
+      <a href="/" class="inline-block text-xs uppercase heading-tracking text-cyanGlow/70 hover:text-cyanGlow transition-colors mb-8">
+        ← Tilbake til forsiden
+      </a>
+      <p class="circuit-line inline-block text-xs uppercase heading-tracking text-cyanGlow/80 font-medium">
+        Ordreautomatisering · ROI-analyse
+      </p>
+      <h1 class="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.05] tracking-tight text-white">
+        HVA KOSTER MANUELL<br>
+        <span class="grad-text">ORDREREGISTRERING DEG?</span>
+      </h1>
+      <p class="mt-6 text-lg text-white/65 max-w-2xl mx-auto leading-relaxed">
+        Juster tallene for din bedrift og se sparepotensiale i sanntid.
+        Resultater oppdateres umiddelbart.
+      </p>
+
+      <!-- Live badge -->
+      <div class="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyanGlow/20 bg-cyanGlow/5">
+        <span class="w-2 h-2 rounded-full bg-cyanGlow live-badge"></span>
+        <span class="text-xs uppercase tracking-wider text-cyanGlow/80 font-medium">Sanntidsberegning</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CALCULATOR ===== -->
+  <section class="pb-28 lg:pb-40">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+
+        <!-- LEFT: Inputs -->
+        <div class="calc-card rounded-3xl p-8 lg:p-10">
+          <p class="text-xs uppercase heading-tracking text-cyanGlow/80 font-medium mb-1">Dine tall</p>
+          <h2 class="font-display text-2xl font-semibold text-white mb-8">Konfigurer din bedrift</h2>
+
+          <!-- Input: Daily orders -->
+          <div class="mb-8">
+            <div class="flex justify-between items-baseline mb-3">
+              <label class="text-xs uppercase tracking-wider text-white/50 font-medium">PDF-ordrer per dag</label>
+              <span class="font-display text-2xl font-semibold text-cyanGlow" id="orders-display">50</span>
+            </div>
+            <input type="range" id="orders-slider" min="5" max="500" value="50" step="5"
+                   oninput="syncInput('orders', this.value); calculate()">
+            <div class="flex justify-between text-xs text-white/30 mt-1"><span>5</span><span>500</span></div>
+            <input type="number" id="orders" value="50" min="1"
+                   class="calc-input mt-4"
+                   oninput="syncSlider('orders', this.value); calculate()">
+          </div>
+
+          <!-- Input: Minutes per entry -->
+          <div class="mb-8">
+            <div class="flex justify-between items-baseline mb-3">
+              <label class="text-xs uppercase tracking-wider text-white/50 font-medium">Minutter per manuell registrering</label>
+              <span class="font-display text-2xl font-semibold text-cyanGlow" id="minutes-display">6</span>
+            </div>
+            <input type="range" id="minutes-slider" min="1" max="30" value="6" step="1"
+                   oninput="syncInput('minutes', this.value); calculate()">
+            <div class="flex justify-between text-xs text-white/30 mt-1"><span>1 min</span><span>30 min</span></div>
+            <input type="number" id="minutes" value="6" min="1"
+                   class="calc-input mt-4"
+                   oninput="syncSlider('minutes', this.value); calculate()">
+          </div>
+
+          <!-- Input: Hourly wage -->
+          <div class="mb-2">
+            <div class="flex justify-between items-baseline mb-3">
+              <label class="text-xs uppercase tracking-wider text-white/50 font-medium">Timekostnad ansatt (NOK)</label>
+              <span class="font-display text-2xl font-semibold text-cyanGlow" id="wage-display">450</span>
+            </div>
+            <input type="range" id="wage-slider" min="200" max="1200" value="450" step="25"
+                   oninput="syncInput('wage', this.value); calculate()">
+            <div class="flex justify-between text-xs text-white/30 mt-1"><span>200 kr</span><span>1 200 kr</span></div>
+            <input type="number" id="wage" value="450" min="1"
+                   class="calc-input mt-4"
+                   oninput="syncSlider('wage', this.value); calculate()">
+          </div>
+
+          <!-- Context note -->
+          <p class="mt-8 text-xs text-white/35 leading-relaxed border-t border-cyanGlow/10 pt-6">
+            Beregningen baserer seg på 250 arbeidsdager per år og en 92 % reduksjon i
+            manuell håndtering ved full AI-automatisering — i tråd med Bonesai sine
+            referanseprosjekter.
+          </p>
+        </div>
+
+        <!-- RIGHT: Results -->
+        <div class="space-y-5">
+
+          <!-- Score ring card -->
+          <div class="calc-card rounded-3xl p-8 text-center">
+            <p class="text-xs uppercase heading-tracking text-cyanGlow/80 font-medium mb-5">Autonomipoeng</p>
+
+            <div class="relative inline-flex items-center justify-center">
+              <svg width="160" height="160" viewBox="0 0 160 160" class="score-ring">
+                <circle class="score-track" cx="80" cy="80" r="68"/>
+                <circle class="score-fill" id="score-arc" cx="80" cy="80" r="68"
+                        stroke-dasharray="427" stroke-dashoffset="427"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span class="stat-number text-4xl text-white" id="score-number">0</span>
+                <span class="text-xs text-white/40 uppercase tracking-wider">/ 100</span>
+              </div>
+            </div>
+
+            <p id="score-label" class="mt-4 text-sm text-white/60">Juster tallene for å se scoren din</p>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="grid grid-cols-2 gap-5">
+            <div class="result-card rounded-2xl p-6 text-center" id="card-hours">
+              <p class="text-xs uppercase tracking-wider text-white/40 mb-2">Timer spart / år</p>
+              <span class="stat-number text-3xl text-cyanGlow" id="hours-saved">—</span>
+              <p class="text-xs text-white/30 mt-1">arbeidstimer</p>
+            </div>
+            <div class="result-card rounded-2xl p-6 text-center" id="card-money">
+              <p class="text-xs uppercase tracking-wider text-white/40 mb-2">NOK spart / år</p>
+              <span class="stat-number text-3xl text-cyanGlow" id="money-saved">—</span>
+              <p class="text-xs text-white/30 mt-1">lønnskostnad</p>
+            </div>
+          </div>
+
+          <!-- Monthly breakdown -->
+          <div class="calc-card rounded-3xl p-7">
+            <p class="text-xs uppercase heading-tracking text-cyanGlow/80 font-medium mb-5">Fordeling</p>
+
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-xs text-white/50 mb-2">
+                  <span>Daglig tidstap (manuelt)</span>
+                  <span class="text-white/70" id="daily-hours-manual">— t</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill bar-before" id="bar-before" style="width:0%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs text-white/50 mb-2">
+                  <span>Daglig tidstap (etter AI)</span>
+                  <span class="text-cyanGlow" id="daily-hours-after">— t</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill bar-after" id="bar-after" style="width:8%"></div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-cyanGlow/10 grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <p class="text-xs text-white/35 uppercase tracking-wider mb-1">Per dag</p>
+                  <p class="font-display text-base font-semibold text-white" id="daily-saving">—</p>
+                </div>
+                <div>
+                  <p class="text-xs text-white/35 uppercase tracking-wider mb-1">Per mnd</p>
+                  <p class="font-display text-base font-semibold text-white" id="monthly-saving">—</p>
+                </div>
+                <div>
+                  <p class="text-xs text-white/35 uppercase tracking-wider mb-1">Per år</p>
+                  <p class="font-display text-base font-semibold text-cyanGlow" id="yearly-saving">—</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA block -->
+          <div class="calc-card rounded-3xl p-7 border-cyanGlow/25" style="border-color: rgba(0,255,255,0.25)">
+            <p class="text-xs uppercase heading-tracking text-cyanGlow/80 font-medium mb-1">Neste steg</p>
+            <h3 class="font-display text-xl font-semibold text-white mb-3">
+              Klar for å automatisere?
+            </h3>
+            <p class="text-sm text-white/60 mb-5">
+              Pakke 01 gir full Copilot Studio-integrasjon mot Business Central —
+              ordreimport uten manuell touch.
+            </p>
+            <div class="flex flex-col gap-3">
+              <a href="/#kontakt"
+                 class="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-midnight bg-cyanGlow glow-cyan transition-all duration-300">
+                Book en uforpliktende prat →
+              </a>
+              <button onclick="shareResults()"
+                      class="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-cyanGlow border border-cyanGlow/30 hover:border-cyanGlow/60 hover:bg-cyanGlow/5 transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                Del rapporten på LinkedIn ↗
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hairline max-w-5xl mx-auto"></div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-cyanGlow/10 mt-0">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-white rounded-md p-1">
+          <img src="logo.png" alt="" class="h-7 w-7 object-contain" />
+        </div>
+        <span class="font-display text-sm text-white/70">Bonesai · Bones Autonomic Intelligence</span>
+      </div>
+      <p class="text-xs text-white/40">© 2026 Bones Autonomic Intelligence. Alle rettigheter reservert.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Sync slider ↔ number input ──────────────────────────────────────────
+    function syncInput(id, val) {
+      document.getElementById(id).value = val;
+      document.getElementById(id + '-display').textContent = Number(val).toLocaleString('no-NO');
+    }
+    function syncSlider(id, val) {
+      const slider = document.getElementById(id + '-slider');
+      if (slider) slider.value = val;
+      document.getElementById(id + '-display').textContent = Number(val).toLocaleString('no-NO');
+    }
+
+    // ── Animated counter ───────────────────────────────────────────────────
+    function animateTo(el, target, prefix, suffix, decimals) {
+      const start  = parseFloat(el.dataset.current || 0);
+      const end    = target;
+      const dur    = 600;
+      const t0     = performance.now();
+      function step(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        const cur  = start + (end - start) * ease;
+        el.textContent = (prefix || '') + cur.toLocaleString('no-NO', { maximumFractionDigits: decimals || 0 }) + (suffix || '');
+        if (p < 1) requestAnimationFrame(step);
+        else el.dataset.current = end;
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ── Score ring ─────────────────────────────────────────────────────────
+    const CIRC = 2 * Math.PI * 68; // ≈ 427
+    function setScoreRing(score) {
+      const arc = document.getElementById('score-arc');
+      const offset = CIRC * (1 - score / 100);
+      arc.style.strokeDashoffset = offset;
+
+      // Colour shift: red → yellow → cyan
+      if (score >= 70)      arc.style.stroke = '#00FFFF';
+      else if (score >= 40) arc.style.stroke = '#facc15';
+      else                  arc.style.stroke = '#f87171';
+    }
+
+    // ── Main calculation ───────────────────────────────────────────────────
+    function calculate() {
+      const n = Math.max(1, parseFloat(document.getElementById('orders').value)  || 50);
+      const m = Math.max(1, parseFloat(document.getElementById('minutes').value) || 6);
+      const w = Math.max(1, parseFloat(document.getElementById('wage').value)    || 450);
+
+      const totalMinDay   = n * m;
+      const totalHrsDay   = totalMinDay / 60;
+      const currentHrsYr  = totalHrsDay * 250;
+
+      const savedHrsYr    = Math.round(currentHrsYr * 0.92);
+      const savedNOKYr    = Math.round(savedHrsYr * w);
+
+      const afterHrsDay   = totalHrsDay * 0.08;
+      const savedNOKDay   = Math.round(savedHrsYr / 250 * w);
+      const savedNOKMonth = Math.round(savedNOKYr / 12);
+
+      // Autonomy score: 100 = no manual load; 0 = full 8h day spent on entry
+      const rawScore = Math.max(0, Math.min(100, Math.round(100 - (totalMinDay / 480) * 100)));
+
+      // ── Update score ─────────────────────────────────────────────────────
+      setScoreRing(rawScore);
+      animateTo(document.getElementById('score-number'), rawScore, '', '');
+
+      const labels = {
+        high:   'Lav belastning — greit utgangspunkt for skalering.',
+        medium: 'Moderat belastning — automatisering vil frigjøre merkbar kapasitet.',
+        low:    'Høy manuell belastning — stor ROI-mulighet med AI-automatisering.'
+      };
+      document.getElementById('score-label').textContent =
+        rawScore >= 70 ? labels.high : rawScore >= 40 ? labels.medium : labels.low;
+
+      // ── Update stats ─────────────────────────────────────────────────────
+      animateTo(document.getElementById('hours-saved'), savedHrsYr, '');
+      animateTo(document.getElementById('money-saved'), savedNOKYr, '', ' kr');
+
+      // ── Highlight cards ───────────────────────────────────────────────────
+      ['card-hours', 'card-money'].forEach(id => {
+        document.getElementById(id).classList.add('highlight');
+      });
+
+      // ── Bars ─────────────────────────────────────────────────────────────
+      const maxHrsPerDay = 8;
+      const beforePct = Math.min(100, (totalHrsDay / maxHrsPerDay) * 100);
+      const afterPct  = Math.min(100, (afterHrsDay  / maxHrsPerDay) * 100);
+
+      document.getElementById('bar-before').style.width = beforePct + '%';
+      document.getElementById('bar-after').style.width  = Math.max(2, afterPct) + '%';
+
+      document.getElementById('daily-hours-manual').textContent =
+        totalHrsDay.toLocaleString('no-NO', { maximumFractionDigits: 1 }) + ' t';
+      document.getElementById('daily-hours-after').textContent =
+        afterHrsDay.toLocaleString('no-NO', { maximumFractionDigits: 2 }) + ' t';
+
+      // ── Breakdown ─────────────────────────────────────────────────────────
+      document.getElementById('daily-saving').textContent   = savedNOKDay.toLocaleString('no-NO') + ' kr';
+      document.getElementById('monthly-saving').textContent = savedNOKMonth.toLocaleString('no-NO') + ' kr';
+      document.getElementById('yearly-saving').textContent  = savedNOKYr.toLocaleString('no-NO') + ' kr';
+    }
+
+    // ── LinkedIn share ─────────────────────────────────────────────────────
+    function shareResults() {
+      const score  = document.getElementById('score-number').textContent;
+      const saved  = document.getElementById('money-saved').textContent;
+      const text   = encodeURIComponent(
+        `Vi scoret ${score}/100 på Bonesai sin Autonomianalyse og kan spare ${saved} per år ved å automatisere ordreregistrering med AI i Business Central. Sjekk din score:`
+      );
+      window.open(
+        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${text}`
+      );
+    }
+
+    // ── Init ───────────────────────────────────────────────────────────────
+    calculate();
+  </script>
+
+</body>
+</html>
