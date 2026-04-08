@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tjenester | Bonesai – Bones Autonomic Intelligence</title>
+  <meta name="description" content="Tjenester og priser fra Bones Autonomic Intelligence – Copilot Studio, Python forecasting, Excel, simulering og FlexSim." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#0A1128',
+            cyanGlow: '#00FFFF',
+            cobalt:  '#1E3A8A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      background-color: #0A1128;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .garden-bg {
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(0,255,255,0.08), transparent 55%),
+        radial-gradient(ellipse at 85% 30%, rgba(30,58,138,0.55), transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(0,255,255,0.05), transparent 60%),
+        #0A1128;
+    }
+    .nav-white {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(10, 17, 40, 0.08);
+      box-shadow: 0 6px 30px -12px rgba(0, 0, 0, 0.35);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.35), 0 0 24px rgba(0,255,255,0.25);
+    }
+    .glow-cyan:hover {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.6), 0 0 36px rgba(0,255,255,0.45);
+    }
+    .hairline {
+      background: linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent);
+      height: 1px;
+    }
+    .price-card {
+      border: 1px solid rgba(0, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(30,58,138,0.20), rgba(10,17,40,0.30));
+      transition: all 0.3s ease;
+    }
+    .price-card:hover {
+      border-color: rgba(0, 255, 255, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 25px 60px -25px rgba(0, 255, 255, 0.30);
+    }
+    .featured {
+      border-color: rgba(0,255,255,0.55);
+      background: linear-gradient(180deg, rgba(30,58,138,0.35), rgba(10,17,40,0.30));
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.35), 0 30px 70px -25px rgba(0,255,255,0.35);
+    }
+    .heading-tracking { letter-spacing: 0.18em; }
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(0,255,255,0.75);
+      font-weight: 600;
+    }
+    .check::before {
+      content: "→";
+      color: #00FFFF;
+      margin-right: 0.6rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="garden-bg">
+
+  <!-- ============== NAVIGATION ============== -->
+  <header class="fixed top-0 inset-x-0 z-50 nav-white">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="logo.png" alt="Bonesai logo" class="h-12 w-12 object-contain" />
+        <span class="font-display text-xl font-semibold tracking-wide text-cobalt">Bonesai</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-10 text-sm font-medium text-midnight/80">
+        <li><a href="/tjenester" class="text-cobalt font-semibold">Tjenester</a></li>
+        <li><a href="/demo" class="hover:text-cobalt transition-colors">Demo</a></li>
+        <li><a href="/om" class="hover:text-cobalt transition-colors">Om</a></li>
+      </ul>
+      <a href="/#kontakt"
+         class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white bg-cobalt hover:bg-midnight transition-all duration-300">
+        Kontakt
+      </a>
+    </nav>
+  </header>
+
+  <!-- ============== PAGE HERO ============== -->
+  <section class="relative pt-40 pb-16 lg:pt-48 lg:pb-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <a href="/" class="text-xs uppercase heading-tracking text-cyanGlow/80 hover:text-cyanGlow transition-colors">
+        ← Tilbake til forsiden
+      </a>
+      <h1 class="mt-6 font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.05]">
+        TJENESTER &amp; <span class="text-cyanGlow">PRISER</span>
+      </h1>
+      <p class="mt-6 max-w-3xl text-lg text-white/70">
+        Spesialiteten min er <span class="text-cyanGlow">Microsoft Copilot Studio</span> –
+        men jeg leverer også prognoseverktøy, Excel-modeller, simuleringer og
+        kombinasjoner av alt dette. Alt skreddersys til problemet ditt.
+      </p>
+    </div>
+  </section>
+
+  <div class="hairline max-w-5xl mx-auto"></div>
+
+  <!-- ============== CATEGORY: COPILOT STUDIO ============== -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="flex items-baseline justify-between flex-wrap gap-4">
+        <div>
+          <p class="label">Spesialitet</p>
+          <h2 class="mt-2 font-display text-3xl lg:text-4xl font-semibold text-white heading-tracking">
+            COPILOT STUDIO
+          </h2>
+        </div>
+        <p class="text-sm text-white/50 max-w-md">
+          Agentisk AI bygget på Microsofts økosystem – integrert med ERP, Power Automate
+          og Excel.
+        </p>
+      </div>
+
+      <div class="mt-12 grid lg:grid-cols-3 gap-6">
+
+        <!-- Copilot Studio – ERP -->
+        <div class="price-card rounded-2xl p-8">
+          <p class="label">Pakke 01</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            Copilot Studio integrert i ERP
+          </h3>
+          <p class="mt-4 text-sm text-white/65">
+            Full integrasjon mot Business Central eller Dynamics 365 – agenten leser,
+            oppretter og oppdaterer data direkte i ERP.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">85 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">Engangsleveranse · eks. mva</p>
+          </div>
+          <ul class="mt-6 space-y-2 text-sm text-white/75">
+            <li class="check">Behovsanalyse og løsningsdesign</li>
+            <li class="check">Bygging av agent i Copilot Studio</li>
+            <li class="check">ERP-integrasjon via Power Automate</li>
+            <li class="check">Testing og overlevering</li>
+          </ul>
+        </div>
+
+        <!-- Copilot Studio – Power Automate -->
+        <div class="price-card featured rounded-2xl p-8">
+          <p class="label">Pakke 02 · Mest fleksibel</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            Copilot Studio + Power Automate Flows
+          </h3>
+          <p class="mt-4 text-sm text-white/65">
+            Skreddersydd antall Power Automate-flows som agenten kan utløse på vegne av
+            brukeren – ideelt for tverrgående prosesser.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">45 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">+ 8 000 kr per flow · eks. mva</p>
+          </div>
+          <ul class="mt-6 space-y-2 text-sm text-white/75">
+            <li class="check">Workshop og prosesskartlegging</li>
+            <li class="check">Bygging av agent + n flows</li>
+            <li class="check">Tilkoblinger til SharePoint, Outlook, Teams m.m.</li>
+            <li class="check">Dokumentasjon og brukeropplæring</li>
+          </ul>
+        </div>
+
+        <!-- Copilot Studio – Excel combo -->
+        <div class="price-card rounded-2xl p-8">
+          <p class="label">Pakke 03</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            Copilot Studio + Excel-optimalisering
+          </h3>
+          <p class="mt-4 text-sm text-white/65">
+            Kombinasjon der agenten henter, analyserer og oppdaterer Excel-baserte
+            beregningsmodeller – beslutningsstøtte i sanntid.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">60 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">Engangsleveranse · eks. mva</p>
+          </div>
+          <ul class="mt-6 space-y-2 text-sm text-white/75">
+            <li class="check">Excel-modell tilpasset agenten</li>
+            <li class="check">Toveis dataflyt mellom agent og ark</li>
+            <li class="check">Innebygd validering og feilhåndtering</li>
+            <li class="check">Hosting via SharePoint / OneDrive</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="hairline max-w-5xl mx-auto"></div>
+
+  <!-- ============== CATEGORY: ANALYTICS & SIMULATION ============== -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="flex items-baseline justify-between flex-wrap gap-4">
+        <div>
+          <p class="label">Også tilgjengelig</p>
+          <h2 class="mt-2 font-display text-3xl lg:text-4xl font-semibold text-white heading-tracking">
+            ANALYSE &amp; SIMULERING
+          </h2>
+        </div>
+        <p class="text-sm text-white/50 max-w-md">
+          Verktøy for prognoser, optimalisering og avanserte beslutningsmodeller –
+          uavhengig av Microsoft-økosystemet.
+        </p>
+      </div>
+
+      <div class="mt-12 grid lg:grid-cols-2 gap-6">
+
+        <!-- Python Forecasting -->
+        <div class="price-card rounded-2xl p-8">
+          <p class="label">Tjeneste</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            Python Forecasting Model
+          </h3>
+          <p class="mt-2 text-xs text-cyanGlow/80 uppercase tracking-wider">Top tier algorithms</p>
+          <p class="mt-4 text-sm text-white/65">
+            Etterspørsels- og trendprognoser bygget i Python med XGBoost, Prophet, LSTM
+            eller <span class="text-cyanGlow font-semibold">Chronos-2</span> – levert med
+            dashboards og full dokumentasjon.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">70 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">Engangsleveranse · eks. mva</p>
+          </div>
+        </div>
+
+        <!-- Excel Optimized Logistics -->
+        <div class="price-card rounded-2xl p-8">
+          <p class="label">Tjeneste</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            Excel Optimized Logistics
+          </h3>
+          <p class="mt-2 text-xs text-cyanGlow/80 uppercase tracking-wider">Processes &amp; Economics</p>
+          <p class="mt-4 text-sm text-white/65">
+            Skreddersydde Excel-modeller for ruteplanlegging, lagerstyring, kostnads-
+            og marginanalyse – med innebygd Solver eller Power Query.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">35 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">Engangsleveranse · eks. mva</p>
+          </div>
+        </div>
+
+        <!-- Discrete Event Simulation -->
+        <div class="price-card rounded-2xl p-8">
+          <p class="label">Tjeneste</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            Discrete Event Simulation
+          </h3>
+          <p class="mt-2 text-xs text-cyanGlow/80 uppercase tracking-wider">Best practical analytics</p>
+          <p class="mt-4 text-sm text-white/65">
+            Simulering av komplekse forretningsprosesser for å teste scenarier før
+            beslutninger tas – ideelt for kapasitet, flaskehalser og investeringer.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">95 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">Engangsleveranse · eks. mva</p>
+          </div>
+        </div>
+
+        <!-- FlexSim -->
+        <div class="price-card rounded-2xl p-8">
+          <p class="label">Tjeneste · Premium</p>
+          <h3 class="mt-3 font-display text-xl font-semibold text-white">
+            FlexSim – Avansert 3D-simulering
+          </h3>
+          <p class="mt-2 text-xs text-cyanGlow/80 uppercase tracking-wider">Production &amp; warehouse logistics</p>
+          <p class="mt-4 text-sm text-white/65">
+            Statistisk analyse av produksjonslinjer eller lagerflyter i fullskala 3D –
+            visualiserte resultater og scenariesammenligning.
+          </p>
+          <div class="mt-6">
+            <p class="text-3xl font-display font-semibold text-white">fra <span class="text-cyanGlow">140 000 kr</span></p>
+            <p class="text-xs text-white/40 mt-1">Engangsleveranse · eks. mva</p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="mt-12 text-center text-xs text-white/40 max-w-2xl mx-auto">
+        Alle priser er veiledende og forutsetter en innledende workshop for omfangsvurdering.
+        Endelig pris avtales etter kartlegging av behov, datatilgang og kompleksitet.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="font-display text-3xl lg:text-4xl font-semibold text-white">
+        Ikke sikker på hva du trenger?
+      </h2>
+      <p class="mt-4 text-lg text-white/70">
+        Bestill en uforpliktende prat – vi finner ut sammen om Bonesai er riktig partner.
+      </p>
+      <a href="/#kontakt"
+         class="mt-8 inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-semibold text-midnight bg-cyanGlow glow-cyan transition-all duration-300">
+        Ta kontakt
+      </a>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="border-t border-cyanGlow/10 mt-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-white rounded-md p-1">
+          <img src="logo.png" alt="" class="h-7 w-7 object-contain" />
+        </div>
+        <span class="font-display text-sm text-white/70">Bonesai · Bones Autonomic Intelligence</span>
+      </div>
+      <p class="text-xs text-white/40">© 2026 Bones Autonomic Intelligence. Alle rettigheter reservert.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

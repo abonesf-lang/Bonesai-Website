@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo | Bonesai – Bones Autonomic Intelligence</title>
+  <meta name="description" content="Tidligere prosjekter fra Bones Autonomic Intelligence – problemstilling, løsning og resultat." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#0A1128',
+            cyanGlow: '#00FFFF',
+            cobalt:  '#1E3A8A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      background-color: #0A1128;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .garden-bg {
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(0,255,255,0.08), transparent 55%),
+        radial-gradient(ellipse at 85% 30%, rgba(30,58,138,0.55), transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(0,255,255,0.05), transparent 60%),
+        #0A1128;
+    }
+    .nav-white {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(10, 17, 40, 0.08);
+      box-shadow: 0 6px 30px -12px rgba(0, 0, 0, 0.35);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.35), 0 0 24px rgba(0,255,255,0.25);
+    }
+    .glow-cyan:hover {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.6), 0 0 36px rgba(0,255,255,0.45);
+    }
+    .hairline {
+      background: linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent);
+      height: 1px;
+    }
+    .demo-card {
+      border: 1px solid rgba(0, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(30,58,138,0.20), rgba(10,17,40,0.25));
+      transition: all 0.3s ease;
+    }
+    .demo-card:hover {
+      border-color: rgba(0, 255, 255, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 30px 60px -25px rgba(0, 255, 255, 0.25);
+    }
+    .heading-tracking { letter-spacing: 0.18em; }
+    .pill {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,255,255,0.35);
+      color: #00FFFF;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(0,255,255,0.75);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="garden-bg">
+
+  <!-- ============== NAVIGATION ============== -->
+  <header class="fixed top-0 inset-x-0 z-50 nav-white">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="logo.png" alt="Bonesai logo" class="h-12 w-12 object-contain" />
+        <span class="font-display text-xl font-semibold tracking-wide text-cobalt">Bonesai</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-10 text-sm font-medium text-midnight/80">
+        <li><a href="/tjenester" class="hover:text-cobalt transition-colors">Tjenester</a></li>
+        <li><a href="/demo" class="text-cobalt font-semibold">Demo</a></li>
+        <li><a href="/om" class="hover:text-cobalt transition-colors">Om</a></li>
+      </ul>
+      <a href="/#kontakt"
+         class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white bg-cobalt hover:bg-midnight transition-all duration-300">
+        Kontakt
+      </a>
+    </nav>
+  </header>
+
+  <!-- ============== PAGE HERO ============== -->
+  <section class="relative pt-40 pb-16 lg:pt-48 lg:pb-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <a href="/" class="text-xs uppercase heading-tracking text-cyanGlow/80 hover:text-cyanGlow transition-colors">
+        ← Tilbake til forsiden
+      </a>
+      <h1 class="mt-6 font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.05]">
+        DEMO &amp; <span class="text-cyanGlow">CASE STUDIES</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-white/70">
+        Et utvalg tidligere prosjekter – fra problemstilling og løsningsarkitektur
+        til målbart resultat.
+      </p>
+    </div>
+  </section>
+
+  <div class="hairline max-w-5xl mx-auto"></div>
+
+  <!-- ============== DEMO LIST – GROUP 1: COPILOT STUDIO ============== -->
+  <section class="py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <header class="mb-12 flex items-end justify-between flex-wrap gap-4">
+        <div>
+          <p class="label">Spesialitet</p>
+          <h2 class="mt-2 font-display text-3xl lg:text-4xl font-semibold text-white heading-tracking">
+            COPILOT STUDIO
+          </h2>
+          <p class="mt-3 text-white/60 max-w-xl">
+            Agentisk AI bygget på Microsofts økosystem – der data blir til handling.
+          </p>
+        </div>
+        <span class="hidden md:inline-block text-xs uppercase heading-tracking text-cyanGlow/60">Kjernetilbud</span>
+      </header>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- DEMO 01 -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 01</span>
+            <span class="text-xs text-white/40">Copilot Studio · AI-basert ordreimport</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            AI-basert ordreimport til Business Central
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En grossist brukte 4–6 timer daglig på manuell registrering av innkommende
+              PDF-ordrer, med høy feilmargin og forsinket fakturering.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Vår digitale agent eliminerer manuell punching ved å tilby automatisert
+              ordreregistrering. Agenten tolker innkommende PDF-ordrer og oppretter
+              disse direkte i <span class="text-cyanGlow font-semibold">Business Central</span>
+              via API.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              <span class="text-cyanGlow font-semibold">92 %</span> reduksjon i manuell tid,
+              feilmargin under 1 %, og fakturering samme dag som ordre mottas.
+            </p>
+          </div>
+        </article>
+
+        <!-- DEMO 02 -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 02</span>
+            <span class="text-xs text-white/40">Copilot Studio · Avviksdeteksjon</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            Automatisk avvikskontroll mellom Business Central og faktura/ordrebekreftelse
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Økonomi, innkjøp og selgere brukte mye tid på manuell kontroll av
+              innkommende fakturaer og ordrebekreftelser opp mot det som var registrert
+              i <span class="text-cyanGlow font-semibold">Business Central</span> – en
+              treg og feilutsatt prosess.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En Copilot Studio-agent koblet til e-post som trigges automatisk av
+              innkommende meldinger. Agenten leser PDF-vedlegg, lokaliserer aktuell
+              <span class="text-cyanGlow font-semibold">PO-referanse</span> og matcher
+              dataene mot ordren i Business Central. Avvik på pris, antall eller
+              leveringsdato genereres som en automatisk avviksrapport.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Ansvarlig selger eller innkjøper mottar en ryddig e-post som enten
+              bekrefter full klaff eller lister opp faktiske avvik – slutt på manuell
+              kontroll, og økonomiavdelingen fanger opp feil før de blir bokført.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="hairline max-w-5xl mx-auto"></div>
+
+  <!-- ============== DEMO LIST – GROUP 2: LOGISTIKKINGENIØRENS VERKTØYKASSE ============== -->
+  <section class="py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <header class="mb-12 flex items-end justify-between flex-wrap gap-4">
+        <div>
+          <p class="label">Også på menyen</p>
+          <h2 class="mt-2 font-display text-3xl lg:text-4xl font-semibold text-white heading-tracking">
+            INGENIØRFAGLIG VERKTØYKASSE
+          </h2>
+          <p class="mt-3 text-white/60 max-w-xl">
+            Prosjekter fra logistikkingeniørens hverdag – prognoser, simulering,
+            business intelligence og beregningsmodeller.
+          </p>
+        </div>
+        <span class="hidden md:inline-block text-xs uppercase heading-tracking text-cyanGlow/60">Også tilgjengelig</span>
+      </header>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- DEMO 03 -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 03</span>
+            <span class="text-xs text-white/40">Python · Etterspørselsprognose</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            Etterspørselsprognose for sesongvarer
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Detaljhandelskjede slet med overlager på vinterprodukter og samtidig
+              tomgang på bestselgere – tradisjonell Excel-prognose klarte ikke å fange
+              opp kampanjer og værdata.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Python-modell som kombinerte XGBoost, Prophet og Amazons
+              <span class="text-cyanGlow font-semibold">Chronos-2</span> foundation
+              model for tidsserier – koblet til historisk salg, kampanjedata og
+              værprognoser, levert via et Power BI-dashboard.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              <span class="text-cyanGlow font-semibold">31 %</span> lavere overlager
+              og 18 % økt omsetning på sesongkategorien første kvartal etter lansering.
+            </p>
+          </div>
+        </article>
+
+        <!-- DEMO 04 -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 04</span>
+            <span class="text-xs text-white/40">FlexSim · Kapasitetssimulering</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            3D-simulering av maskinlayout og kapasitet
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En produksjonslinje skulle reorganiseres, og ledelsen trengte konkrete
+              svar på både plassering og riktig antall enheter av maskinelt utstyr –
+              uten å gamble på magefølelse før investeringsbeslutning.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              FlexSim Discrete Event Simulation med fullskala 3D-modell og ekte
+              ordreprofiler, kombinert med statistiske likninger for prosesstid på
+              både maskiner og menneskelig arbeid. Modellen ble kalibrert mot reelle
+              produksjonsdata, og fire layout- og kapasitetsscenarier ble kjørt mot
+              hverandre.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Anbefalt løsning ga <span class="text-cyanGlow font-semibold">24 %</span>
+              kortere transportdistanse, mer balansert operatørbelastning og estimert
+              besparelse på 1,4 MNOK årlig – beslutning tatt før fysisk ombygging startet.
+            </p>
+          </div>
+        </article>
+
+        <!-- DEMO 05 -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 05</span>
+            <span class="text-xs text-white/40">Power BI · Dashboard-konsolidering</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            Fra fem dashboards til én sannhet
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En operativ avdeling brukte daglig tid på å lete i fem–seks ulike
+              Power BI-dashboards, som ofte viste motstridende KPI-er på grunn av
+              ulik beregningslogikk.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Konsolidering av alle datakilder i én sentral Power BI-modell med et
+              gjenbrukbart <span class="text-cyanGlow font-semibold">DAX</span>-bibliotek
+              – ett dashboard, beriket informasjon på tvers av domener.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              <span class="text-cyanGlow font-semibold">70 %</span> mindre tid brukt
+              på rapporthåndtering, og KPI-avvikene mellom rapporter forsvant helt.
+            </p>
+          </div>
+        </article>
+
+        <!-- DEMO 06 – ALTERNATIV A -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 06 · Alt. A</span>
+            <span class="text-xs text-white/40">Excel · Profittoptimalisering</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            Max-profit tilbudssammenligning
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En bedrift mottok parallelle tilbud fra flere leverandører med ulike
+              priser, volumrabatter, leveringsvilkår og minimumskvanta – og måtte
+              finne ut hvilken kombinasjon som faktisk ga høyest profitt, ikke bare
+              lavest enhetspris.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En avansert Excel-beregningsmodell med Solver-basert optimalisering som
+              simultant vurderer priser, begrensninger og mengder. Modellen finner den
+              kombinasjonen av leverandører og volumer som gir
+              <span class="text-cyanGlow font-semibold">maksimal profitt</span> innenfor
+              bedriftens reelle rammer.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Innkjøpsteamet gikk fra magefølelse til datadrevne beslutninger, og
+              modellen avdekket et profittpotensial på
+              <span class="text-cyanGlow font-semibold">~9 %</span> som tidligere lå
+              skjult bak "laveste pris"-logikken.
+            </p>
+          </div>
+        </article>
+
+        <!-- DEMO 06 – ALTERNATIV B -->
+        <article class="demo-card rounded-2xl p-8 lg:p-10">
+          <div class="flex items-center justify-between">
+            <span class="pill">Demo 06 · Alt. B</span>
+            <span class="text-xs text-white/40">Excel · EOQ / EBQ</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-semibold text-white">
+            EOQ &amp; EBQ – optimalt bestillings- og batchkvantum
+          </h3>
+
+          <div class="mt-6">
+            <p class="label">Problemstilling</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En produksjonsbedrift slet med å balansere lagerkostnader mot
+              bestillings- og omstillingskostnader – for store partier ga høyt
+              bundet kapital, for små ga unødvendige oppstartskostnader.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Løsning</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              En Excel-modell basert på
+              <span class="text-cyanGlow font-semibold">Economic Order Quantity (EOQ)</span>
+              og Economic Batch Quantity (EBQ), utvidet med sensitivitetsanalyse for
+              pris, etterspørsel og holdingkostnad. Modellen beregner optimalt
+              bestillingskvantum per SKU og viser hvor maksimal profitt faktisk ligger
+              for bedriften.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <p class="label">Resultat</p>
+            <p class="mt-2 text-white/80 leading-relaxed">
+              Totale lager- og bestillingskostnader ble redusert med
+              <span class="text-cyanGlow font-semibold">17 %</span>, og bedriften fikk
+              et beslutningsverktøy de selv kan oppdatere når priser eller etterspørsel
+              endrer seg.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="font-display text-3xl lg:text-4xl font-semibold text-white">
+        Har du et lignende problem?
+      </h2>
+      <p class="mt-4 text-lg text-white/70">
+        La oss finne ut om Bonesai kan automatisere det også.
+      </p>
+      <a href="/#kontakt"
+         class="mt-8 inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-semibold text-midnight bg-cyanGlow glow-cyan transition-all duration-300">
+        Start prosjekt
+      </a>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="border-t border-cyanGlow/10 mt-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-white rounded-md p-1">
+          <img src="logo.png" alt="" class="h-7 w-7 object-contain" />
+        </div>
+        <span class="font-display text-sm text-white/70">Bonesai · Bones Autonomic Intelligence</span>
+      </div>
+      <p class="text-xs text-white/40">© 2026 Bones Autonomic Intelligence. Alle rettigheter reservert.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

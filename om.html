@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Om | Bonesai – Bones Autonomic Intelligence</title>
+  <meta name="description" content="Om Alexander Bones – logistikkingeniør og grunnlegger av Bones Autonomic Intelligence." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#0A1128',
+            cyanGlow: '#00FFFF',
+            cobalt:  '#1E3A8A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      background-color: #0A1128;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .garden-bg {
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(0,255,255,0.08), transparent 55%),
+        radial-gradient(ellipse at 85% 30%, rgba(30,58,138,0.55), transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(0,255,255,0.05), transparent 60%),
+        #0A1128;
+    }
+    .nav-white {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(10, 17, 40, 0.08);
+      box-shadow: 0 6px 30px -12px rgba(0, 0, 0, 0.35);
+    }
+    .logo-plate {
+      background: #FFFFFF;
+      border-radius: 1.25rem;
+      box-shadow:
+        0 0 0 1px rgba(0, 255, 255, 0.25),
+        0 20px 60px -20px rgba(0, 255, 255, 0.35),
+        0 0 80px -10px rgba(30, 58, 138, 0.55);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.35), 0 0 24px rgba(0,255,255,0.25);
+    }
+    .glow-cyan:hover {
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.6), 0 0 36px rgba(0,255,255,0.45);
+    }
+    .hairline {
+      background: linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent);
+      height: 1px;
+    }
+    .section-card {
+      border: 1px solid rgba(0, 255, 255, 0.10);
+      background: linear-gradient(180deg, rgba(30,58,138,0.18), rgba(10,17,40,0.2));
+    }
+    .heading-tracking { letter-spacing: 0.18em; }
+    .circuit-line::before {
+      content: "";
+      display: block;
+      width: 56px;
+      height: 2px;
+      background: linear-gradient(90deg, #00FFFF, rgba(0,255,255,0));
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body class="garden-bg">
+
+  <!-- ============== NAVIGATION ============== -->
+  <header class="fixed top-0 inset-x-0 z-50 nav-white">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="logo.png" alt="Bonesai logo" class="h-12 w-12 object-contain" />
+        <span class="font-display text-xl font-semibold tracking-wide text-cobalt">Bonesai</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-10 text-sm font-medium text-midnight/80">
+        <li><a href="/tjenester" class="hover:text-cobalt transition-colors">Tjenester</a></li>
+        <li><a href="/demo" class="hover:text-cobalt transition-colors">Demo</a></li>
+        <li><a href="/om" class="text-cobalt font-semibold">Om</a></li>
+      </ul>
+      <a href="/#kontakt"
+         class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white bg-cobalt hover:bg-midnight transition-all duration-300">
+        Kontakt
+      </a>
+    </nav>
+  </header>
+
+  <!-- ============== PAGE HERO ============== -->
+  <section class="relative pt-40 pb-16 lg:pt-48 lg:pb-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <a href="/" class="text-xs uppercase heading-tracking text-cyanGlow/80 hover:text-cyanGlow transition-colors">
+        ← Tilbake til forsiden
+      </a>
+      <h1 class="mt-6 font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.05]">
+        OM <span class="text-cyanGlow">BONESAI</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-white/70">
+        Et lite selskap med stor ambisjon – å gi norske bedrifter digitale hender.
+      </p>
+    </div>
+  </section>
+
+  <div class="hairline max-w-5xl mx-auto"></div>
+
+  <!-- ============== ABOUT FOUNDER ============== -->
+  <section class="py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-12 items-start">
+      <div class="lg:col-span-5 flex justify-center lg:justify-start">
+        <div class="logo-plate p-8 lg:p-10">
+          <img src="logo.png" alt="Bonesai logo" class="w-56 lg:w-64 h-auto object-contain" />
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <p class="circuit-line text-xs uppercase heading-tracking text-cyanGlow/80 font-medium">
+          Grunnlegger
+        </p>
+        <h2 class="font-display text-3xl lg:text-4xl font-semibold tracking-tight text-white heading-tracking">
+          ALEXANDER BONES
+        </h2>
+        <div class="section-card rounded-2xl p-8 lg:p-10 mt-8">
+          <p class="text-lg leading-relaxed text-white/85">
+            Bonesai er drevet av én person — meg, Alexander Bones. Jeg er
+            <span class="text-cyanGlow font-medium">logistikkingeniør</span> og brenner for
+            automatisering: alt fra repetitive operasjonelle oppgaver til komplekse
+            beslutningsstøtte-systemer.
+          </p>
+          <p class="mt-6 text-lg leading-relaxed text-white/85">
+            Jeg spesialiserer meg innenfor <span class="text-cyanGlow font-medium">Microsoft 365</span> –
+            og har et særlig fokus på Copilot Studio, Power Automate, Business Central og
+            Dynamics 365. Målet er alltid det samme: bygge agenter som faktisk gjør jobben,
+            ikke bare snakker om den.
+          </p>
+
+          <div class="mt-10 flex flex-wrap items-center gap-4">
+            <a href="https://www.linkedin.com/in/alexanderbones/" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-midnight bg-cyanGlow glow-cyan transition-all duration-300">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              Se profil på LinkedIn
+            </a>
+            <a href="/#kontakt" class="text-sm font-medium text-white/70 hover:text-cyanGlow transition-colors">
+              Ta kontakt →
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick facts -->
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+          <div class="rounded-xl border border-cyanGlow/15 p-5">
+            <p class="text-xs uppercase heading-tracking text-cyanGlow/70">Fagfelt</p>
+            <p class="mt-2 font-display text-white">Logistikkingeniør</p>
+          </div>
+          <div class="rounded-xl border border-cyanGlow/15 p-5">
+            <p class="text-xs uppercase heading-tracking text-cyanGlow/70">Spesialitet</p>
+            <p class="mt-2 font-display text-white">Microsoft 365</p>
+          </div>
+          <div class="rounded-xl border border-cyanGlow/15 p-5">
+            <p class="text-xs uppercase heading-tracking text-cyanGlow/70">Drivkraft</p>
+            <p class="mt-2 font-display text-white">Automatisering</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="border-t border-cyanGlow/10 mt-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-white rounded-md p-1">
+          <img src="logo.png" alt="" class="h-7 w-7 object-contain" />
+        </div>
+        <span class="font-display text-sm text-white/70">Bonesai · Bones Autonomic Intelligence</span>
+      </div>
+      <p class="text-xs text-white/40">© 2026 Bones Autonomic Intelligence. Alle rettigheter reservert.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
